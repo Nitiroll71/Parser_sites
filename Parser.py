@@ -38,9 +38,10 @@ page_name_user = 'https://fonwall.ru/@meow1234/'
 
 user_check_page = session.get(page_name_user, headers=header).text
 user_soup = BeautifulSoup(user_check_page, 'lxml')
-chek_user = user_soup.find('span', class_='ProfileHeader_profileFirstName__1G8fe')
+chek_user = user_soup.find('span', class_='ProfileHeader_profileFirstName__1G8fe').text
 print(chek_user)
 
+site_link = 'https://fonwall.ru/'
 picture_link = 'https://image.fonwall.ru/o/el/caucasian-forest-fog.jpeg?auto=compress&fit=resize&h=286&w=500&display=thumb&domain=img3.fonwall.ru'
 # Получаем содержимое страницы комикса
 comix_page_responce = session.get(picture_link, headers=header).content
