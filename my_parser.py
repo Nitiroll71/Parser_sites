@@ -1,6 +1,7 @@
 import requests
 import fake_useragent
 import os
+import re
 from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 
@@ -17,7 +18,7 @@ class Parser:
         # Создаем сессию для работы с куки и авторизацией
         self.session = requests.Session()
     
-    def set_urls(self, url_site, page_name_user, authorization_link):
+    def set_urls(self, url_site, authorization_link, page_name_user):
         self.url_site = url_site
         self.page_name_user = page_name_user
         self.authorization_link = authorization_link
@@ -50,17 +51,26 @@ class Parser:
         }
         self.header = header
 
-        # Отправляем POST-запрос на авторизацию
-        responce = self.session.post(self.authorization_link, data=data, headers=header).text
-        print(responce)
+        # 🔧 ВАЖНО: отправляем POST-запрос для авторизации
+        auth_response = self.session.post(self.authorization_link, data=data, headers=header)
+
+        # Проверка, вдруг авторизация не удалась
+        print(f"[DEBUG] Auth status: {auth_response.status_code}")
+        if auth_response.status_code != 200:
+            print("❌ Авторизация не удалась.")
+            return
 
         # Получаем HTML-код страницы пользователя после авторизации
         user_check_page = self.session.get(self.page_name_user, headers=header).text
 
-        # Проверка на успешность входа
+        # Парсим страницу с помощью BeautifulSoup
         user_soup = BeautifulSoup(user_check_page, 'lxml')
-        check_user = user_soup.find('span', class_='ProfileHeader_profileFirstName__1G8fe')
-        print(check_user)
+
+        # Ищем имя пользователя в блоке профиля
+        chek_user = user_soup.find('span', class_='ProfileHeader_profileFirstName__1G8fe').text
+
+        # Выводим имя пользователя в консоль
+        print(chek_user)
     
     def get_pictures(self):
 

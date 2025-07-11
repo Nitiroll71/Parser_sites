@@ -68,7 +68,7 @@ for i, img in enumerate(all_pic_soup, start=1):
     urls_pict.append(src)
 
 # Загружаем картинку по прямой ссылке (авторизованной сессией). Сохраняем картинку в файл
-for i, src in enumerate(urls_pict):
-    picture = session.get(src, headers=header).content
-    with open(f'F:\\PyProjects\\Parser_sites\\pictures\\picture{i}.png', 'wb') as f:
-        f.write(picture)
+# for i, src in enumerate(urls_pict):
+#     picture = session.get(src, headers=header).content
+#     with open(f'F:\\PyProjects\\Parser_sites\\pictures\\picture{i}.png', 'wb') as f:
+#         f.write(picture)
