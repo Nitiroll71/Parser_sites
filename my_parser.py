@@ -39,7 +39,7 @@ class Parser:
         }
 
         # Создаем сессию для работы с куки и авторизацией
-        session = requests.Session()
+        self.session = requests.Session()
 
         # Получаем случайный user-agent для маскировки
         user = fake_useragent.UserAgent().random
@@ -48,11 +48,18 @@ class Parser:
         header = {
             'user-agent': user
         }
+        self.header = header
 
         # Отправляем POST-запрос на авторизацию
-        session.post(self.authorization_link, data=data, headers=header).text
+        self.session.post(self.authorization_link, data=data, headers=header).text
 
         # Получаем HTML-код страницы пользователя после авторизации
-        user_check_page = session.get(self.page_name_user, headers=header).text
+        user_check_page = self.session.get(self.page_name_user, headers=header).text
 
-        return user_check_page
+        # Проверка на успешность входа
+        user_soup = BeautifulSoup(user_check_page, 'lxml')
+        print(user_soup.find('span', class_='ProfileHeader_profileFirstName__1G8fe').text)
+    
+    def get_pictures(self):
+
+        self.session = requests.Session()
