@@ -2,3 +2,5 @@
 test.py
 .gitignore
 pictures
+__pycache__
+.venv

@@ -13,6 +13,9 @@ class Parser:
     def __init__(self, authorization_link, url_site, page_name_user):
 
         self.set_urls(authorization_link, url_site, page_name_user)
+
+        # Создаем сессию для работы с куки и авторизацией
+        self.session = requests.Session()
     
     def set_urls(self, url_site, page_name_user, authorization_link):
         self.url_site = url_site
@@ -38,9 +41,6 @@ class Parser:
             'password': PASSWORD
         }
 
-        # Создаем сессию для работы с куки и авторизацией
-        self.session = requests.Session()
-
         # Получаем случайный user-agent для маскировки
         user = fake_useragent.UserAgent().random
 
@@ -51,14 +51,16 @@ class Parser:
         self.header = header
 
         # Отправляем POST-запрос на авторизацию
-        self.session.post(self.authorization_link, data=data, headers=header).text
+        responce = self.session.post(self.authorization_link, data=data, headers=header).text
+        print(responce)
 
         # Получаем HTML-код страницы пользователя после авторизации
         user_check_page = self.session.get(self.page_name_user, headers=header).text
 
         # Проверка на успешность входа
         user_soup = BeautifulSoup(user_check_page, 'lxml')
-        print(user_soup.find('span', class_='ProfileHeader_profileFirstName__1G8fe').text)
+        check_user = user_soup.find('span', class_='ProfileHeader_profileFirstName__1G8fe')
+        print(check_user)
     
     def get_pictures(self):
 
