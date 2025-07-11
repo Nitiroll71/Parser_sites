@@ -12,9 +12,18 @@ class Parser:
 
     def __init__(self, authorization_link, url_site, page_name_user):
 
-        self.authorization_link = authorization_link
+        set_urls(authorization_link, url_site, page_name_user)
+    
+    def set_urls(self, url_site, page_name_user, authorization_link):
         self.url_site = url_site
         self.page_name_user = page_name_user
+        self.authorization_link = authorization_link
+
+    def get_urls(self):
+        
+        return self.url_site
+        return self.page_name_user
+        return self.authorization_link
 
     def authorization(self):
 
