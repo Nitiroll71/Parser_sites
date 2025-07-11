@@ -12,7 +12,7 @@ class Parser:
 
     def __init__(self, authorization_link, url_site, page_name_user):
 
-        set_urls(authorization_link, url_site, page_name_user)
+        self.set_urls(authorization_link, url_site, page_name_user)
     
     def set_urls(self, url_site, page_name_user, authorization_link):
         self.url_site = url_site
@@ -21,9 +21,7 @@ class Parser:
 
     def get_urls(self):
         
-        return self.url_site
-        return self.page_name_user
-        return self.authorization_link
+        return self.url_site, self.authorization_link, self.page_name_user
 
     def authorization(self):
 
@@ -42,3 +40,19 @@ class Parser:
 
         # Создаем сессию для работы с куки и авторизацией
         session = requests.Session()
+
+        # Получаем случайный user-agent для маскировки
+        user = fake_useragent.UserAgent().random
+
+        # Заголовки запроса
+        header = {
+            'user-agent': user
+        }
+
+        # Отправляем POST-запрос на авторизацию
+        session.post(self.authorization_link, data=data, headers=header).text
+
+        # Получаем HTML-код страницы пользователя после авторизации
+        user_check_page = session.get(self.page_name_user, headers=header).text
+
+        return user_check_page
