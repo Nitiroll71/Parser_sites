@@ -1,6 +1,7 @@
 import requests
 import fake_useragent
 import os
+import re
 from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 
@@ -55,9 +56,19 @@ chek_user = user_soup.find('span', class_='ProfileHeader_profileFirstName__1G8fe
 # Выводим имя пользователя в консоль
 print(chek_user)
 
-# Загружаем картинку по прямой ссылке (авторизованной сессией)
-picture = session.get(picture_link, headers=header).content
+# Ищем все картинки на странице
+page_block = session.get(page_link, headers=header).text
+all_pic_block = BeautifulSoup(page_block, 'lxml')
+all_pic_soup = all_pic_block.find_all('img', class_ = re.compile(r'^Article_image__I_3mF'))
 
-# Сохраняем картинку в файл
-with open('picture.png', 'wb') as f:
-    f.write(picture)
+# Получение ссылок на картинки
+urls_pict = []
+for i, img in enumerate(all_pic_soup, start=1):
+    src = img.get('src')
+    urls_pict.append(src)
+
+# Загружаем картинку по прямой ссылке (авторизованной сессией). Сохраняем картинку в файл
+for i, src in enumerate(urls_pict):
+    picture = session.get(src, headers=header).content
+    with open(f'F:\\PyProjects\\Parser_sites\\pictures\\picture{i}.png', 'wb') as f:
+        f.write(picture)
