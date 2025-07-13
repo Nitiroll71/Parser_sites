@@ -22,9 +22,9 @@ class TelegramBot:
             i = 0
             while True:
                 with open(f'F:\\PyProjects\\Parser_sites\\pictures\\picture{i}.png', 'rb') as photo: 
-                    time.sleep(2) 
+                    # Задержка 4 секунды т.к. Телеграм ограничивает 20 сообщений в минуту.
+                    time.sleep(4) 
                     self.bot.send_photo(self.chanel_id, photo)
-                    os.remove("F:\\PyProjects\\Parser_sites\\pictures\\picture{i}.png")
-                    i += 1  
-        except FileNotFoundError:
+                    i += 1
+        except (FileNotFoundError, telebot.apihelper.ApiTelegramException) as E:
              pass
