@@ -9,4 +9,4 @@ tgbot = TelegramBot()
 parser_pict.authorization()
 parser_pict.get_pictures()
 
-# tgbot.send_to_tg()
+tgbot.send_to_tg()

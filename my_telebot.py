@@ -1,5 +1,6 @@
 import telebot
 import os
+import time
 from dotenv import load_dotenv
 
 class TelegramBot:
@@ -16,6 +17,14 @@ class TelegramBot:
 
 
     def send_to_tg(self):
-        with open('blank_user.jpg', 'rb') as photo:  
-                self.bot.send_photo(self.chanel_id, photo)  
-              
+
+        try:
+            i = 0
+            while True:
+                with open(f'F:\\PyProjects\\Parser_sites\\pictures\\picture{i}.png', 'rb') as photo: 
+                    time.sleep(2) 
+                    self.bot.send_photo(self.chanel_id, photo)
+                    os.remove("F:\\PyProjects\\Parser_sites\\pictures\\picture{i}.png")
+                    i += 1  
+        except FileNotFoundError:
+             pass
