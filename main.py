@@ -20,4 +20,4 @@ try:
         os.remove(f"F:\\PyProjects\\Parser_sites\\pictures\\picture{i}.png")
         i += 1
 except FileNotFoundError:
-    print('все файлы удалены')
+    print('Все файлы удалены')

@@ -82,7 +82,7 @@ class Parser:
             src = img.get('src')
             urls_pict.append(src)
 
-        # Загружаем картинку по прямой ссылке (авторизованной сессией). Сохраняем картинку в файл
+        # Загружаем картинку по прямой ссылке
         for i, src in enumerate(urls_pict):
             picture = self.session.get(src, headers=self.header).content
             print(f'Сохраниение картинки {i}')

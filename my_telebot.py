@@ -18,6 +18,7 @@ class TelegramBot:
 
     def send_to_tg(self):
 
+        # загрузка всех фоток из папки
         try:
             i = 0
             while True:
@@ -27,4 +28,4 @@ class TelegramBot:
                     self.bot.send_photo(self.chanel_id, photo)
                     i += 1
         except (FileNotFoundError, telebot.apihelper.ApiTelegramException) as E:
-             pass
+             print('Все файлы загружены на канал.')
