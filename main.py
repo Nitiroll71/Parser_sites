@@ -25,10 +25,7 @@ LOGIN = os.getenv('LOGIN')
 PASSWORD = os.getenv('PASSWORD')
 
 # Данные для авторизации
-data = {
-    'mail': LOGIN,
-    'password': PASSWORD
-}
+data = {"mail":"meow1234","password":"qwert1234"}
 
 # Создаем сессию для работы с куки и авторизацией
 session = requests.Session()
@@ -42,7 +39,11 @@ header = {
 }
 
 # Отправляем POST-запрос на авторизацию
-responce = session.post(authorization_link, data=data, headers=header).text
+responce = session.post(authorization_link, json=data, headers=header)
+if responce != 200:
+    print(f"Авторизация не удалась. Код ошибки: {responce.status_code}\nОтвет от сервера: {responce.text}")
+else:
+    print(f"Авторизация удалась. Код: {responce.status_code}")
 
 # Получаем HTML-код страницы пользователя после авторизации
 user_check_page = session.get(page_name_user, headers=header).text
@@ -62,12 +63,12 @@ all_pic_block = BeautifulSoup(page_block, 'lxml')
 all_pic_soup = all_pic_block.find_all('img', class_ = re.compile(r'^Article_image__I_3mF'))
 
 # Получение ссылок на картинки
-urls_pict = []
-for i, img in enumerate(all_pic_soup, start=1):
-    src = img.get('src')
-    urls_pict.append(src)
+# urls_pict = []
+# for i, img in enumerate(all_pic_soup, start=1):
+#     src = img.get('src')
+#     urls_pict.append(src)
 
-# Загружаем картинку по прямой ссылке (авторизованной сессией). Сохраняем картинку в файл
+# # Загружаем картинку по прямой ссылке (авторизованной сессией). Сохраняем картинку в файл
 # for i, src in enumerate(urls_pict):
 #     picture = session.get(src, headers=header).content
 #     with open(f'F:\\PyProjects\\Parser_sites\\pictures\\picture{i}.png', 'wb') as f:
