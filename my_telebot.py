@@ -21,7 +21,7 @@ class TelegramBot:
         try:
             i = 0
             while True:
-                with open(f'F:\\PyProjects\\Parser_sites\\pictures\\picture{i}.png', 'rb') as photo: 
+                with open(f'F:\\MyProjects\\Parser_sites\\pictures\\picture{i}.png', 'rb') as photo: 
                     # Задержка 4 секунды т.к. Телеграм ограничивает 20 сообщений в минуту.
                     time.sleep(4) 
                     self.bot.send_photo(self.CHANEL_ID, photo)

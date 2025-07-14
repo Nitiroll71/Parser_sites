@@ -56,20 +56,15 @@ class Parser:
             return
         else:
             print(f"Авторизация удалась. Код: {auth_response.status_code}")
-
-        # Получаем HTML-код страницы пользователя после авторизации
-        user_check_page = self.session.get(self.page_name_user, headers=header).text
-
-        # Парсим страницу с помощью BeautifulSoup
-        user_soup = BeautifulSoup(user_check_page, 'lxml')
-
-        # Ищем имя пользователя в блоке профиля
-        chek_user = user_soup.find('span', class_='ProfileHeader_profileFirstName__1G8fe').text
-
-        # Выводим имя пользователя в консоль
-        print(f'Имя пользователя: {chek_user}')
     
     def get_pictures(self):
+        
+
+       # Выводим имя пользователя в консоль
+        user_check_page = self.session.get(self.page_name_user, headers=self.header).text
+        user_soup = BeautifulSoup(user_check_page, 'lxml')
+        chek_user = user_soup.find('span', class_='ProfileHeader_profileFirstName__1G8fe').text
+        print(f'Имя пользователя: {chek_user}')
 
         # Ищем все картинки на странице
         page_block = self.session.get(self.url_site, headers=self.header).text
@@ -86,5 +81,5 @@ class Parser:
         for i, src in enumerate(urls_pict):
             picture = self.session.get(src, headers=self.header).content
             print(f'Сохраниение картинки {i}')
-            with open(f'F:\\PyProjects\\Parser_sites\\pictures\\picture{i}.png', 'wb') as f:
+            with open(f'F:\\MyProjects\\Parser_sites\\pictures\\picture{i}.png', 'wb') as f:
                 f.write(picture)

@@ -17,7 +17,7 @@ try:
     i = 0
     while True:
         # удаление фото из системы
-        os.remove(f"F:\\PyProjects\\Parser_sites\\pictures\\picture{i}.png")
+        os.remove(f"F:\\MyProjects\\Parser_sites\\pictures\\picture{i}.png")
         i += 1
 except FileNotFoundError:
     print('Все файлы удалены')
