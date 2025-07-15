@@ -8,16 +8,8 @@ parser_pict = Parser('https://auth.fonwall.ru/auth/login',
 tgbot = TelegramBot()
 
 parser_pict.authorization()
-parser_pict.get_pictures()
 
-tgbot.send_to_tg()
+picture_urls = parser_pict.get_pictures()
 
-# Удаляем фото после отправки в канал телеграм
-try:
-    i = 0
-    while True:
-        # удаление фото из системы
-        os.remove(f"F:\\MyProjects\\Parser_sites\\pictures\\picture{i}.png")
-        i += 1
-except FileNotFoundError:
-    print('Все файлы удалены')
+tgbot = TelegramBot(session=parser_pict.session)
+tgbot.send_to_tg_urls(picture_urls)
