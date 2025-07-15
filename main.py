@@ -1,4 +1,3 @@
-import os
 from my_parser import Parser
 from my_telebot import TelegramBot
 

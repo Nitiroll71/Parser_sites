@@ -13,7 +13,6 @@ class TelegramBot:
         load_dotenv()
         
         self.CHANEL_ID=os.getenv('CHANEL_ID')
-        print(self.CHANEL_ID)
         TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
         self.bot = telebot.TeleBot(TELEGRAM_TOKEN)
         self.session = session or requests.Session()
@@ -30,7 +29,7 @@ class TelegramBot:
                     photo = BytesIO(response.content)
                     photo.name = f"picture{i}.png"
                     self.bot.send_photo(self.CHANEL_ID, photo)
-                    print(f"Фото {i} отправлено")
+                    print(f"Фото {i+1} отправлено")
                 else:
                     print(f"Не удалось скачать фото {i}, статус: {response.status_code}")
             except Exception as e:
