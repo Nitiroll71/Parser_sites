@@ -8,7 +8,7 @@ tgbot = TelegramBot()
 
 parser_pict.authorization()
 
-picture_urls = parser_pict.get_pictures()
+picture_urls = parser_pict.get_pictures_url(parser_pict.find_pict_url())
 
 tgbot = TelegramBot(session=parser_pict.session)
 tgbot.send_to_tg_urls(picture_urls)

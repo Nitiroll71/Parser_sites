@@ -27,10 +27,10 @@ class TelegramBot:
                 response = self.session.get(url)
                 if response.status_code == 200:
                     photo = BytesIO(response.content)
-                    photo.name = f"picture{i}.png"
+                    photo.name = f"picture{i+1}.png"
                     self.bot.send_photo(self.CHANEL_ID, photo)
                     print(f"Фото {i+1} отправлено")
                 else:
-                    print(f"Не удалось скачать фото {i}, статус: {response.status_code}")
+                    print(f"Не удалось скачать фото {i+1}, статус: {response.status_code}")
             except Exception as e:
-                print(f"Ошибка при отправке фото {i}: {e}")
+                print(f"Ошибка при отправке фото {i+1}: {e}")
