@@ -13,7 +13,6 @@ class TelegramBot:
         load_dotenv()
         
         self.CHANEL_ID=os.getenv('CHANEL_ID')
-        print(self.CHANEL_ID)
         TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
         self.bot = telebot.TeleBot(TELEGRAM_TOKEN)
         self.session = session or requests.Session()
