@@ -2,6 +2,7 @@ import requests
 import fake_useragent
 import os
 import re
+import time
 from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 
@@ -55,7 +56,8 @@ class Parser:
             chek_user = user_soup.find('span', class_='ProfileHeader_profileFirstName__1G8fe').text
             print(f'Имя пользователя: {chek_user}')
     
-    def find_pict_block(self, page_count):
+    def find_pict_block(self, page_count):        
+        self.start_time = time.time()
         
         MAX_PAGE_COUNT = 5275
         if page_count < MAX_PAGE_COUNT:
@@ -95,6 +97,10 @@ class Parser:
                         
             alt = img.get('alt')            
             text_pict.append(alt)
+            
+        end_time = time.time()
+        execution_time = end_time - self.start_time
+        print(f"Время выполнения: {execution_time:.6f} секунд")
         
         # возвращаем текст на картинки
         return text_pict
