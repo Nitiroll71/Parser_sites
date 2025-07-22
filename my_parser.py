@@ -60,6 +60,7 @@ class Parser:
         MAX_PAGE_COUNT = 5275
         if page_count < MAX_PAGE_COUNT:
             all_pic_soup = []
+            
             for i in range(1, page_count + 1, 1):
                 # Ищем все картинки на странице
                 page_block = self.session.get(f'{self.url_site}?page={i}', headers=self.header).text
@@ -78,20 +79,22 @@ class Parser:
         # Получение ссылок на картинки
         urls_pict = []
         for i, img in enumerate(block, start=1):
-            src = img.get('src')
-            urls_pict.append(src)
+                        
+            src = img.get('src')            
+            urls_pict.append(src)            
             print(f'Картинка {i}: {src}')
         
         # возвращаем ссылки на картинки
         return urls_pict
-        cookies_list = []
-        for cookie in self.session.cookies:
-            cookies_list.append({
-                "name": cookie.name,
-                "value": cookie.value,
-                "domain": cookie.domain,
-                "path": cookie.path,
-                "secure": cookie.secure,
-                "expires": cookie.expires
-            })
-        return cookies_list
+    
+    def get_pict_text(self, block):
+        
+        # Получение текста на картинки
+        text_pict = []
+        for i, img in enumerate(block, start=1):
+                        
+            alt = img.get('alt')            
+            text_pict.append(alt)
+        
+        # возвращаем текст на картинки
+        return text_pict

@@ -18,7 +18,7 @@ class TelegramBot:
         self.session = session or requests.Session()
 
 
-    def send_to_tg_urls(self, urls):
+    def send_to_tg_urls(self, urls, text):
 
         # загрузка всех фоток ссылок
         for i, url in enumerate(urls):
@@ -28,7 +28,7 @@ class TelegramBot:
                 if response.status_code == 200:
                     photo = BytesIO(response.content)
                     photo.name = f"picture{i+1}.png"
-                    self.bot.send_photo(self.CHANEL_ID, photo)
+                    self.bot.send_photo(self.CHANEL_ID, photo, caption=text)
                     print(f"Фото {i+1} отправлено")
                 else:
                     print(f"Не удалось скачать фото {i+1}, статус: {response.status_code}")
